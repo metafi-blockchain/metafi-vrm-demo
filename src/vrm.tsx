@@ -69,7 +69,7 @@ const Avatar = ({ vrm }: { vrm: VRM }) => {
     }
   });
 
-  const vrmaContainer = useLoader(GLTFLoader, '/vrmas/VRMA_07.vrma', (loader) => {
+  const vrmaContainer = useLoader(GLTFLoader, listVRMS[0].value, (loader) => {
     loader.register((parser) => {
       return new VRMAnimationLoaderPlugin(parser);
     });
