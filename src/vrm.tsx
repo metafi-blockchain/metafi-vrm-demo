@@ -9,7 +9,7 @@ import { Canvas, useFrame, useLoader } from '@react-three/fiber';
 import { PerspectiveCamera } from '@react-three/drei';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import { createVRMAnimationClip, VRMAnimation, VRMAnimationLoaderPlugin } from '@pixiv/three-vrm-animation';
-
+import {listVRMS} from '../src/contants';
 export default function Model() {
 
 
