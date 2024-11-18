@@ -19,4 +19,12 @@ export const listVRMS = [
     value: "/vrmas/VRMA_05.vrma",
     name: "VRMA_05",
   },
+  {
+    value: "/vrmas/VRMA_06.vrma",
+    name: "VRMA_06",
+  },
+  {
+    value: "/vrmas/VRMA_07.vrma",
+    name: "VRMA_07",
+  },
 ];
