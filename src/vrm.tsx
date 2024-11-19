@@ -5,7 +5,7 @@ import * as THREE from "three";
 import { VRM } from "@pixiv/three-vrm";
 import { useVRM } from "./lib/useVRM";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
-import { PerspectiveCamera } from "@react-three/drei";
+import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
 import {
   createVRMAnimationClip,
@@ -17,6 +17,8 @@ export default function Model() {
   const rootRef = useRef<HTMLDivElement | null>(null);
   const { vrm } = useVRM();
   const [selectedVRMA, setSelectedVRMA] = useState<string>(listVRMS[0].value);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [progress, setProgress] = useState<number>(0); // state cho thanh tiến trình
 
   useLayoutEffect(() => {
     const root = rootRef.current;
@@ -34,8 +36,34 @@ export default function Model() {
     };
   }, []);
 
+  useEffect(() => {
+    let interval: NodeJS.Timeout | null = null;
+
+    if (loading) {
+      // Tạo hiệu ứng thanh tiến trình với setInterval
+      interval = setInterval(() => {
+        setProgress((prevProgress) => {
+          if (prevProgress < 65) {
+            return prevProgress + 1; // Tăng dần thanh tiến trình
+          } else {
+            clearInterval(interval!);
+            return prevProgress;
+          }
+        });
+      }, 100); // Tăng mỗi 100ms (điều chỉnh thời gian)
+    }
+
+    return () => {
+      if (interval) {
+        clearInterval(interval);
+      }
+    };
+  }, [loading]);
+
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedVRMA(event.target.value);
+    setLoading(true);
+    setProgress(0); // Reset lại thanh tiến trình khi chọn VRMA mới
   };
 
   return (
@@ -55,12 +83,30 @@ export default function Model() {
           ))}
         </select>
       </div>
+      {loading ? (
+        <div style={loadingContainerStyles}>
+          <p style={loadingTextStyles}>Loading VRM...</p>
+          <div style={progressBarContainer}>
+            <div
+              style={{
+                ...progressBar,
+                width: `${progress}%`,
+              }}
+            ></div>
+          </div>
+        </div>
+      ) : null}
       {vrm == undefined ? (
         <div style={{ display: "flex", justifyContent: "center" }}></div>
       ) : (
         <Canvas flat>
           <PerspectiveCamera makeDefault position={[-0.12, 1, 4]} />
-          <Avatar vrm={vrm} selectedVRMA={selectedVRMA} />
+          <Avatar
+            vrm={vrm}
+            selectedVRMA={selectedVRMA}
+            setLoading={setLoading}
+          />
+          <OrbitControls />
           <directionalLight />
         </Canvas>
       )}
@@ -69,7 +115,15 @@ export default function Model() {
 }
 
 /** VRMアバターを表示するコンポーネント */
-const Avatar = ({ vrm, selectedVRMA }: { vrm: VRM; selectedVRMA: string }) => {
+const Avatar = ({
+  vrm,
+  selectedVRMA,
+  setLoading,
+}: {
+  vrm: VRM;
+  selectedVRMA: string;
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
   const mixer = useRef<THREE.AnimationMixer>();
   const action = useRef<THREE.AnimationAction>();
   const [show, setShow] = useState(false);
@@ -110,9 +164,37 @@ const Avatar = ({ vrm, selectedVRMA }: { vrm: VRM; selectedVRMA: string }) => {
       action.current.play();
 
       setShow(true);
+      setLoading(false); // cập nhật lại khi load vrma tải xong
     };
     loadAnimation();
-  }, [vrm, vrma]);
+  }, [vrm, vrma, setLoading]);
 
   return show ? <primitive object={vrm.scene}></primitive> : <></>;
+};
+const loadingContainerStyles: React.CSSProperties = {
+  position: "absolute",
+  top: "70%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  textAlign: "center",
+  fontSize: "24px",
+  zIndex: 10,
+};
+
+const loadingTextStyles: React.CSSProperties = {
+  marginBottom: "10px",
+};
+
+const progressBarContainer: React.CSSProperties = {
+  width: "210px",
+  height: "5px",
+  backgroundColor: "#e2e2f2",
+  borderRadius: "5px",
+  marginTop: "10px",
+};
+
+const progressBar: React.CSSProperties = {
+  height: "100%",
+  backgroundColor: "blue",
+  borderRadius: "5px",
 };
