@@ -16,7 +16,7 @@ export function useVRM(): {
 
   useEffect(() => {
     const fetchModel = async () => {
-      const vrmUrl = './models/nu1.vrm'
+      const vrmUrl = './models/nu2_bo1.vrm'
 
       // const vrmUrl = URL.createObjectURL(modelBlob);
       const loader = new GLTFLoader();
