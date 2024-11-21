@@ -1,22 +1,23 @@
-import { VRM, VRMLoaderPlugin, VRMUtils } from '@pixiv/three-vrm';
-import { useEffect, useRef, useState } from 'react';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import * as THREE from 'three';
-
+import { VRM, VRMLoaderPlugin, VRMUtils } from "@pixiv/three-vrm";
+import { useEffect, useRef, useState } from "react";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import * as THREE from "three";
 
 export function useVRM(): {
   /** vrm本体　 */
   vrm: VRM | null;
   fetchedSize: number;
 } {
-
   const [vrm, setVrm] = useState<VRM | null>(null);
   const [fetchedSize, setFetchedSize] = useState<number>(0);
   const refVRM = useRef<VRM>();
 
   useEffect(() => {
     const fetchModel = async () => {
-      const vrmUrl = './models/nu2_bo1.vrm'
+      const vrmUrl = "./models/nu1.vrm";
+      // ./models/nu2_bo1.vrm
+      // ./models/nu2_bo2.vrm
+      // ./models/nu2_bo3.vrm
 
       // const vrmUrl = URL.createObjectURL(modelBlob);
       const loader = new GLTFLoader();
@@ -51,11 +52,11 @@ export function useVRM(): {
           setVrm(vrm);
           refVRM.current = vrm;
         },
-        (xhr) => console.log((xhr.loaded / xhr.total) * 100 + '% loaded'),
+        (xhr) => console.log((xhr.loaded / xhr.total) * 100 + "% loaded"),
         (error) => {
-          console.error('An error happened');
+          console.error("An error happened");
           console.error(error);
-        },
+        }
       );
     };
     fetchModel();
