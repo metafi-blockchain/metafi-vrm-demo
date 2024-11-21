@@ -13,8 +13,8 @@ export function useVRM(): {
   const refVRM = useRef<VRM>();
 
   useEffect(() => {
-    const fetchModel = async () => {
-      const vrmUrl = "./models/nu1.vrm";
+    const fetchModel = async (vrmUrl: string) => {
+      // const vrmUrl = "./models/nu1.vrm";
       // ./models/nu2_bo1.vrm
       // ./models/nu2_bo2.vrm
       // ./models/nu2_bo3.vrm
@@ -59,7 +59,8 @@ export function useVRM(): {
         }
       );
     };
-    fetchModel();
+
+    fetchModel("./models/nu1.vrm");
   }, []);
 
   return { vrm: vrm, fetchedSize: fetchedSize };
