@@ -13,13 +13,12 @@ export function useVRM(selectedVRMA: string): {
 
   useEffect(() => {
     const fetchModel = async () => {
-      if (!selectedVRMA) {
-        console.warn(
-          "selectedVRMA is empty or undefined. Skipping model load."
-        );
-        return;
-      }
+      const vrmUrl = "./models/nu1.vrm";
+      // ./models/nu2_bo1.vrm
+      // ./models/nu2_bo2.vrm
+      // ./models/nu2_bo3.vrm
 
+      // const vrmUrl = URL.createObjectURL(modelBlob);
       const loader = new GLTFLoader();
       loader.register((parser) => new VRMLoaderPlugin(parser));
 
@@ -61,15 +60,7 @@ export function useVRM(selectedVRMA: string): {
       );
     };
     fetchModel();
-
-    // xóa vrm cũ và tải vrm mới
-    return () => {
-      if (refVRM.current) {
-        VRMUtils.deepDispose(refVRM.current.scene);
-        refVRM.current = null;
-      }
-    };
-  }, [selectedVRMA]);
+  }, []);
 
   return { vrm, fetchedSize };
 }
