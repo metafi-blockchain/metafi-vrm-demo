@@ -13,9 +13,20 @@ import {
   VRMAnimationLoaderPlugin,
 } from "@pixiv/three-vrm-animation";
 import { listVRMS } from "../src/contants";
-export default function Model() {
+
+interface ModelProps {
+
+  vrm: VRM; // Replace 'any' with the appropriate type if known
+
+}
+
+export default function Model(vrm: ModelProps) {
+
   const rootRef = useRef<HTMLDivElement | null>(null);
-  const { vrm } = useVRM();
+
+  // const { vrm } = useVRM("/models/nu2_bo2.vrm");
+  // const vrm1 = useVRM("/models/nu1_bo2.vrm").vrm;
+
   const [selectedVRMA, setSelectedVRMA] = useState<string>(listVRMS[0].value);
   const [loading, setLoading] = useState<boolean>(true);
   const [progress, setProgress] = useState<number>(0); // state cho thanh tiến trình
@@ -99,16 +110,21 @@ export default function Model() {
       {vrm == undefined ? (
         <div style={{ display: "flex", justifyContent: "center" }}></div>
       ) : (
-        <Canvas flat>
+        <>
+         <Canvas flat>
           <PerspectiveCamera makeDefault position={[-0.12, 1, 4]} />
           <Avatar
-            vrm={vrm}
+            vrm={vrm.vrm}
             selectedVRMA={selectedVRMA}
             setLoading={setLoading}
           />
           <OrbitControls />
           <directionalLight />
         </Canvas>
+       
+        </>
+       
+        
       )}
     </div>
   );

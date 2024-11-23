@@ -4,7 +4,8 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import * as THREE from 'three';
 
 
-export function useVRM(): {
+
+export function useVRM(vrmURI: string): {
   /** vrm本体　 */
   vrm: VRM | null;
   fetchedSize: number;
@@ -13,10 +14,12 @@ export function useVRM(): {
   const [vrm, setVrm] = useState<VRM | null>(null);
   const [fetchedSize, setFetchedSize] = useState<number>(0);
   const refVRM = useRef<VRM>();
+  // const [vrmURI, setVrmURI] = useState<string>('./models/nu2_bo1.vrm');
 
   useEffect(() => {
-    const fetchModel = async () => {
-      const vrmUrl = './models/nu2_bo1.vrm'
+
+    const fetchModel = async (vrmUrl: string) => {
+      
 
       // const vrmUrl = URL.createObjectURL(modelBlob);
       const loader = new GLTFLoader();
@@ -58,8 +61,9 @@ export function useVRM(): {
         },
       );
     };
-    fetchModel();
-  }, []);
+    fetchModel(vrmURI);
+
+  }, [vrmURI]);
 
   return { vrm: vrm, fetchedSize: fetchedSize };
 }
