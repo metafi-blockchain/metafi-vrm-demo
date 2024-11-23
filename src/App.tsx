@@ -4,10 +4,12 @@ import { Route, Routes } from "react-router-dom";
 import TheHeader from "./components/header/TheHeader";
 import VrmaNu1 from "./components/nu1/VrmaNu1";
 import { VRM } from "@pixiv/three-vrm";
+import { useVRM } from "./lib/useVRM";
 
 function App() {
   const [selectedVRMA, setSelectedVRMA] = useState("");
   const [vrm, setVrm] = useState<VRM | null>(null);
+
   // const [loading, setLoading] = useState(false);
 
   const listVRMS = [
