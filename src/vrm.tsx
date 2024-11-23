@@ -15,11 +15,13 @@ import {
 import { listVRMS } from "../src/contants";
 import { vrmFiles } from "../src/fileVRM";
 import { useVRM } from "../src/lib/useVRM";
+import TheHeader from "./components/header/TheHeader";
+import VrmaNu1 from "./components/nu1/VrmaNu1";
 
 export default function Model() {
   const rootRef = useRef<HTMLDivElement | null>(null);
   const [selectedVRMA, setSelectedVRMA] = useState<string>(listVRMS[0].value);
-  const { vrm } = useVRM();
+  const { vrm } = useVRM(selectedVRMA);
   const [loading, setLoading] = useState<boolean>(true);
   const [progress, setProgress] = useState<number>(0); // state cho thanh tiến trình
 
@@ -69,108 +71,109 @@ export default function Model() {
   };
 
   return (
-    //
+    //   //
+    <div></div>
 
-    <div style={{ backgroundColor: "#f4f4f4" }}>
-      <div className="container">
-        <div className="row">
-          <div>
-            <h2>Chọn VRM</h2>
-            <select
-              name="select-vrm"
-              id="select-vrm"
-              value={selectedVRMA}
-              onChange={handleChange}
-            >
-              <option value="Chọn vrm">CHọn vrm</option>
-              {vrmFiles.map((file, index) => (
-                <option key={index} value={file.value}>
-                  {file.name}
-                </option>
-              ))}
-            </select>
-          </div>
+    //   <div style={{ backgroundColor: "#f4f4f4" }}>
+    //     <div className="container">
+    //       <div className="row">
+    //         <div>
+    //           <h2>Chọn VRM</h2>
+    //           <select
+    //             name="select-vrm"
+    //             id="select-vrm"
+    //             value={selectedVRMA}
+    //             onChange={handleChange}
+    //           >
+    //             <option value="Chọn vrm">CHọn vrm</option>
+    //             {vrmFiles.map((file, index) => (
+    //               <option key={index} value={file.value}>
+    //                 {file.name}
+    //               </option>
+    //             ))}
+    //           </select>
+    //         </div>
 
-          <div className="col-8 ">
-            <div className="row d-flex">
-              {listVRMS.map((listVRMS, index) => (
-                <div key={index} className="col-4">
-                  <img
-                    src={listVRMS.image}
-                    alt={listVRMS.name}
-                    style={{
-                      width: "270px",
-                      height: "260px",
-                      margin: "10px",
-                      cursor: "pointer",
-                      border:
-                        selectedVRMA === listVRMS.value
-                          ? "2px solid blue"
-                          : "none",
-                    }}
-                    onClick={() => {
-                      setSelectedVRMA(listVRMS.value); // Thay đổi giá trị khi nhấp vào hình
-                    }}
-                  />
-                  <p>{listVRMS.name}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="col-4 ">
-            <div>
-              <label htmlFor="">chọn VRMA: </label>
-              <select
-                name="select-vrma"
-                id="select-vrma"
-                value={selectedVRMA}
-                onChange={handleChange}
-              >
-                {listVRMS.map((fileVRMA, index) => (
-                  <option key={index} value={fileVRMA.value}>
-                    {fileVRMA.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-            {/* {loading ? (
-            <div style={loadingContainer}>
-              <p style={loadingText}>Loading VRM...</p>
-              <div style={progressBarContainer}>
-                <div
-                  style={{
-                    ...progressBar,
-                    width: `${progress}%`,
-                  }}
-                ></div>
-              </div>
-            </div>
-          ) : null} */}
-            {vrm == undefined ? (
-              <div></div>
-            ) : (
-              <Canvas
-                flat
-                style={{
-                  width: "100%",
-                  height: "500px",
-                  backgroundColor: "#ccc",
-                }}
-              >
-                <PerspectiveCamera makeDefault position={[-0.12, 1, 4]} />
-                <Avatar
-                  vrm={vrm}
-                  selectedVRMA={selectedVRMA}
-                  setLoading={setLoading}
-                />
-                <OrbitControls />
-                <directionalLight />
-              </Canvas>
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
+    //         <div className="col-8 ">
+    //           <div className="row d-flex">
+    //             {listVRMS.map((listVRMS, index) => (
+    //               <div key={index} className="col-4">
+    //                 <img
+    //                   src={listVRMS.image}
+    //                   alt={listVRMS.name}
+    //                   style={{
+    //                     width: "270px",
+    //                     height: "260px",
+    //                     margin: "10px",
+    //                     cursor: "pointer",
+    //                     border:
+    //                       selectedVRMA === listVRMS.value
+    //                         ? "2px solid blue"
+    //                         : "none",
+    //                   }}
+    //                   onClick={() => {
+    //                     setSelectedVRMA(listVRMS.value);
+    //                   }}
+    //                 />
+    //                 <p>{listVRMS.name}</p>
+    //               </div>
+    //             ))}
+    //           </div>
+    //         </div>
+    //     <div className="col-4 ">
+    //       <div>
+    //         <label htmlFor="">chọn VRMA: </label>
+    //         <select
+    //           name="select-vrma"
+    //           id="select-vrma"
+    //           value={selectedVRMA}
+    //           onChange={handleChange}
+    //         >
+    //           {listVRMS.map((fileVRMA, index) => (
+    //             <option key={index} value={fileVRMA.value}>
+    //               {fileVRMA.name}
+    //             </option>
+    //           ))}
+    //         </select>
+    //       </div>
+    //       {/* {loading ? (
+    //       <div style={loadingContainer}>
+    //         <p style={loadingText}>Loading VRM...</p>
+    //         <div style={progressBarContainer}>
+    //           <div
+    //             style={{
+    //               ...progressBar,
+    //               width: `${progress}%`,
+    //             }}
+    //           ></div>
+    //         </div>
+    //       </div>
+    //     ) : null} */}
+    //       {vrm == undefined ? (
+    //         <div></div>
+    //       ) : (
+    //         <Canvas
+    //           flat
+    //           style={{
+    //             width: "100%",
+    //             height: "500px",
+    //             backgroundColor: "#ccc",
+    //           }}
+    //         >
+    //           <PerspectiveCamera makeDefault position={[-0.12, 1, 4]} />
+    //           <Avatar
+    //             vrm={vrm}
+    //             selectedVRMA={selectedVRMA}
+    //             setLoading={setLoading}
+    //           />
+    //           <OrbitControls />
+    //           <directionalLight />
+    //         </Canvas>
+    //       )}
+    //     </div>
+    //   </div>
+    // </div>
+    //   </div>
   );
 }
 
@@ -231,30 +234,30 @@ const Avatar = ({
 
   return show ? <primitive object={vrm.scene}></primitive> : <></>;
 };
-const loadingContainer: React.CSSProperties = {
-  position: "absolute",
-  top: "70%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  textAlign: "center",
-  fontSize: "24px",
-  zIndex: 10,
-};
+// const loadingContainer: React.CSSProperties = {
+//   position: "absolute",
+//   top: "70%",
+//   left: "50%",
+//   transform: "translate(-50%, -50%)",
+//   textAlign: "center",
+//   fontSize: "24px",
+//   zIndex: 10,
+// };
 
-const loadingText: React.CSSProperties = {
-  marginBottom: "10px",
-};
+// const loadingText: React.CSSProperties = {
+//   marginBottom: "10px",
+// };
 
-const progressBarContainer: React.CSSProperties = {
-  width: "210px",
-  height: "5px",
-  backgroundColor: "#e2e2f2",
-  borderRadius: "5px",
-  marginTop: "10px",
-};
+// const progressBarContainer: React.CSSProperties = {
+//   width: "210px",
+//   height: "5px",
+//   backgroundColor: "#e2e2f2",
+//   borderRadius: "5px",
+//   marginTop: "10px",
+// };
 
-const progressBar: React.CSSProperties = {
-  height: "100%",
-  backgroundColor: "blue",
-  borderRadius: "5px",
-};
+// const progressBar: React.CSSProperties = {
+//   height: "100%",
+//   backgroundColor: "blue",
+//   borderRadius: "5px",
+// };
