@@ -6,7 +6,7 @@ import { useVRM } from './lib/useVRM';
 function App() {
 
     const vrm  = useVRM("/models/nu2_bo2.vrm").vrm;
-    const vrm2  = useVRM("/models/nu2_bo.vrm").vrm;
+    const vrm2  = useVRM("/models/nu2_bo3.vrm").vrm;
 
   return (
     <div className="App">
