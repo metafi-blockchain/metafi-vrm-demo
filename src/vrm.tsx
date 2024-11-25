@@ -12,22 +12,16 @@ import {
   VRMAnimation,
   VRMAnimationLoaderPlugin,
 } from "@pixiv/three-vrm-animation";
-import { listVRMS } from "../src/contants";
+import { listVRMS } from "./contants";
 
 interface ModelProps {
-
   vrm: VRM; // Replace 'any' with the appropriate type if known
-
+  selectedVRMA?: string;
 }
 
-export default function Model(vrm: ModelProps) {
-
+export default function Model({ vrm, selectedVRMA }: ModelProps) {
   const rootRef = useRef<HTMLDivElement | null>(null);
 
-  // const { vrm } = useVRM("/models/nu2_bo2.vrm");
-  // const vrm1 = useVRM("/models/nu1_bo2.vrm").vrm;
-
-  const [selectedVRMA, setSelectedVRMA] = useState<string>(listVRMS[0].value);
   const [loading, setLoading] = useState<boolean>(true);
   const [progress, setProgress] = useState<number>(0); // state cho thanh tiến trình
 
@@ -71,29 +65,8 @@ export default function Model(vrm: ModelProps) {
     };
   }, [loading]);
 
-  const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedVRMA(event.target.value);
-    setLoading(true);
-    setProgress(0); // Reset lại thanh tiến trình khi chọn VRMA mới
-  };
-
   return (
     <div ref={rootRef}>
-      <div>
-        <label htmlFor="">chọn VRMA: </label>
-        <select
-          name="select-vrma"
-          id="select-vrma"
-          value={selectedVRMA}
-          onChange={handleChange}
-        >
-          {listVRMS.map((fileVRMA, index) => (
-            <option key={index} value={fileVRMA.value}>
-              {fileVRMA.name}
-            </option>
-          ))}
-        </select>
-      </div>
       {loading ? (
         <div style={loadingContainerStyles}>
           <p style={loadingTextStyles}>Loading VRM...</p>
@@ -111,20 +84,17 @@ export default function Model(vrm: ModelProps) {
         <div style={{ display: "flex", justifyContent: "center" }}></div>
       ) : (
         <>
-         <Canvas flat>
-          <PerspectiveCamera makeDefault position={[-0.12, 1, 4]} />
-          <Avatar
-            vrm={vrm.vrm}
-            selectedVRMA={selectedVRMA}
-            setLoading={setLoading}
-          />
-          <OrbitControls />
-          <directionalLight />
-        </Canvas>
-       
+          <Canvas flat>
+            <PerspectiveCamera makeDefault position={[-0.12, 1, 4]} />
+            <Avatar
+              vrm={vrm}
+              selectedVRMA={selectedVRMA ?? listVRMS[0].value}
+              setLoading={setLoading}
+            />
+            <OrbitControls />
+            <directionalLight />
+          </Canvas>
         </>
-       
-        
       )}
     </div>
   );
@@ -169,6 +139,11 @@ const Avatar = ({
     const loadAnimation = async () => {
       if (!vrm) return;
       if (!vrma) return;
+
+      vrm.scene.scale.set(0.8, 0.8, 0.8);
+
+      // Set position of the avatar
+      vrm.scene.position.set(0, -0.6, 0);
 
       const mixerTmp: THREE.AnimationMixer = new THREE.AnimationMixer(
         vrm.scene
