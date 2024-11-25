@@ -15,13 +15,10 @@ import {
 import { listVRMS } from "../src/contants";
 
 interface ModelProps {
-
   vrm: VRM; // Replace 'any' with the appropriate type if known
-
 }
 
 export default function Model(vrm: ModelProps) {
-
   const rootRef = useRef<HTMLDivElement | null>(null);
 
   // const { vrm } = useVRM("/models/nu2_bo2.vrm");
@@ -79,22 +76,15 @@ export default function Model(vrm: ModelProps) {
 
   return (
     <div ref={rootRef}>
-      <div>
+      {/* <div>
         <label htmlFor="">chọn VRMA: </label>
         <select
           name="select-vrma"
           id="select-vrma"
-          value={selectedVRMA}
           onChange={handleChange}
-        >
-          {listVRMS.map((fileVRMA, index) => (
-            <option key={index} value={fileVRMA.value}>
-              {fileVRMA.name}
-            </option>
-          ))}
-        </select>
-      </div>
-      {loading ? (
+        ></select>
+      </div> */}
+      {/* {loading ? (
         <div style={loadingContainerStyles}>
           <p style={loadingTextStyles}>Loading VRM...</p>
           <div style={progressBarContainer}>
@@ -106,26 +96,34 @@ export default function Model(vrm: ModelProps) {
             ></div>
           </div>
         </div>
-      ) : null}
-      {vrm == undefined ? (
-        <div style={{ display: "flex", justifyContent: "center" }}></div>
-      ) : (
-        <>
-         <Canvas flat>
-          <PerspectiveCamera makeDefault position={[-0.12, 1, 4]} />
-          <Avatar
-            vrm={vrm.vrm}
-            selectedVRMA={selectedVRMA}
-            setLoading={setLoading}
-          />
-          <OrbitControls />
-          <directionalLight />
-        </Canvas>
-       
-        </>
-       
-        
-      )}
+      ) : null} */}
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "20px" }}>
+        {listVRMS.map((fileVRMA, index) => (
+          <div key={index} style={{ width: "400px", height: "300px" }}>
+            {vrm == undefined ? (
+              <div style={{ display: "flex", justifyContent: "center" }}></div>
+            ) : (
+              <Canvas
+                flat
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  backgroundColor: "#ccc",
+                }}
+              >
+                <PerspectiveCamera makeDefault position={[-0.12, 1, 4]} />
+                <Avatar
+                  vrm={vrm.vrm}
+                  selectedVRMA={fileVRMA.value}
+                  setLoading={setLoading}
+                />
+                <OrbitControls />
+                <directionalLight />
+              </Canvas>
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
