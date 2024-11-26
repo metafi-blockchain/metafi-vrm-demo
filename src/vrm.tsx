@@ -79,7 +79,7 @@ export default function Model({ vrm, selectedVRMA }: ModelProps) {
           </div>
         </div>
       ) : null}
-      {vrm == undefined ? (
+      {vrm === undefined ? (
         <div style={{ display: "flex", justifyContent: "center" }}></div>
       ) : (
         <>
