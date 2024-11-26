@@ -10,7 +10,8 @@ function App() {
   const vrm3 = useVRM("/models/human.vrm").vrm;
   const vrm4 = useVRM("/models/nu2_bo1.vrm").vrm;
   const vrm5 = useVRM("/models/nu2_bo3.vrm").vrm;
-  const vrm6 = useVRM("/models/nu2_bo2.vrm").vrm;
+  const vrm6 = useVRM("/models/nv_nu1b.vrm").vrm;
+
 
   const modelPaths = [vrm, vrm2, vrm3, vrm4, vrm5, vrm6];
 

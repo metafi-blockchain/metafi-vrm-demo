@@ -3,7 +3,6 @@ import React, { useEffect, useLayoutEffect, useState, useRef } from "react";
 // for vrm
 import * as THREE from "three";
 import { VRM } from "@pixiv/three-vrm";
-import { useVRM } from "./lib/useVRM";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
