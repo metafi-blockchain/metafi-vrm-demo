@@ -5,12 +5,13 @@ import { useVRM } from "./lib/useVRM";
 import { listVRMS } from "./contants";
 
 function App() {
+  
   const vrm = useVRM("/models/nu2_bo2.vrm").vrm;
   const vrm2 = useVRM("/models/nu1.vrm").vrm;
-  const vrm3 = useVRM("/models/human.vrm").vrm;
+  const vrm3 = useVRM("/models/nv_nuden2.vrm").vrm;
   const vrm4 = useVRM("/models/nu2_bo1.vrm").vrm;
   const vrm5 = useVRM("/models/nu2_bo3.vrm").vrm;
-  const vrm6 = useVRM("/models/nu1b.vrm").vrm;
+  const vrm6 = useVRM("/models/nv_nuden1.vrm").vrm;
 
 
   const modelPaths = [vrm, vrm2, vrm3, vrm4, vrm5, vrm6];
