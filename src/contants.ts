@@ -1,30 +1,30 @@
 export const listVRMS = [
   {
     value: "/vrmas/VRMA_01.vrma",
-    name: "VRMA_01",
+    name: "Action 01",
   },
   {
     value: "/vrmas/VRMA_02.vrma",
-    name: "VRMA_02",
+    name: "Action 02",
   },
   {
     value: "/vrmas/VRMA_03.vrma",
-    name: "VRMA_03",
+    name: "Action 03",
   },
   {
     value: "/vrmas/VRMA_04.vrma",
-    name: "VRMA_04",
+    name: "Action 04",
   },
   {
     value: "/vrmas/VRMA_05.vrma",
-    name: "VRMA_05",
+    name: "Action 05",
   },
   {
     value: "/vrmas/VRMA_06.vrma",
-    name: "VRMA_06",
+    name: "Action 06",
   },
   {
     value: "/vrmas/VRMA_07.vrma",
-    name: "VRMA_07",
+    name: "Action 07",
   },
 ];
